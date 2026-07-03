@@ -5,6 +5,7 @@ import com.example.interview_os.dto.QuestionResponseDTO;
 import com.example.interview_os.entity.Question;
 import com.example.interview_os.enums.Difficulty;
 import com.example.interview_os.enums.Topic;
+import com.example.interview_os.mapper.QuestionMapper;
 import com.example.interview_os.repository.QuestionRepository;
 import com.example.interview_os.exception.ResourceNotFoundException;
 import com.example.interview_os.specification.QuestionSpecification;
@@ -17,22 +18,18 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionServiceImpl implements QuestionService {
     private final QuestionRepository questionRepository;
+    private final QuestionMapper questionMapper;
 
-    public QuestionServiceImpl(QuestionRepository questionRepository){
+    public QuestionServiceImpl(QuestionRepository questionRepository, QuestionMapper questionMapper){
         this.questionRepository = questionRepository;
+        this.questionMapper = questionMapper;
     }
 
     @Override
     public QuestionResponseDTO createQuestion(QuestionRequestDTO requestDTO){
-        Question question = new Question();
-        question.setTitle(requestDTO.getTitle());
-        question.setDescription(requestDTO.getDescription());
-        question.setTopic(requestDTO.getTopic());
-        question.setDifficulty(requestDTO.getDifficulty());
-        question.setCompanyTag(requestDTO.getCompanyTag());
-
+        Question question = questionMapper.toEntity(requestDTO);
         Question saved = questionRepository.save(question);
-        return mapToResponseDTO(saved);
+        return questionMapper.toResponseDTO(saved);
     }
 
     @Override
@@ -47,14 +44,14 @@ public class QuestionServiceImpl implements QuestionService {
 
         return questionRepository.findAll(spec)
                 .stream()
-                .map(this::mapToResponseDTO)
+                .map(questionMapper::toResponseDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public QuestionResponseDTO getQuestionById(Long id){
         Question question = questionRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Question", id));
-        return mapToResponseDTO(question);
+        return questionMapper.toResponseDTO(question);
     }
 
     @Override
@@ -68,7 +65,7 @@ public class QuestionServiceImpl implements QuestionService {
         question.setCompanyTag(requestDTO.getCompanyTag());
 
         Question saved = questionRepository.save(question);
-        return mapToResponseDTO(saved);
+        return questionMapper.toResponseDTO(saved);
 
     }
 
@@ -77,17 +74,5 @@ public class QuestionServiceImpl implements QuestionService {
         questionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Question", id));
         questionRepository.deleteById(id);
     }
-
-    private QuestionResponseDTO mapToResponseDTO(Question question){
-        QuestionResponseDTO dto = new QuestionResponseDTO();
-        dto.setId(question.getId());
-        dto.setTitle(question.getTitle());
-        dto.setDescription(question.getDescription());
-        dto.setTopic(question.getTopic());
-        dto.setDifficulty(question.getDifficulty());
-        dto.setCompanyTag(question.getCompanyTag());
-        dto.setStatus(question.getStatus());
-        dto.setCreatedAt(question.getCreatedAt());
-        return dto;
-    }
+    
 }
