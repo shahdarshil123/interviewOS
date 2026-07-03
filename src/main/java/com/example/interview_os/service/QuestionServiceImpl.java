@@ -3,8 +3,12 @@ package com.example.interview_os.service;
 import com.example.interview_os.dto.QuestionRequestDTO;
 import com.example.interview_os.dto.QuestionResponseDTO;
 import com.example.interview_os.entity.Question;
+import com.example.interview_os.enums.Difficulty;
+import com.example.interview_os.enums.Topic;
 import com.example.interview_os.repository.QuestionRepository;
 import com.example.interview_os.exception.ResourceNotFoundException;
+import com.example.interview_os.specification.QuestionSpecification;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,8 +36,19 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionResponseDTO> getAllQuestions(){
-        return questionRepository.findAll().stream().map(this::mapToResponseDTO).collect(Collectors.toList());
+    public List<QuestionResponseDTO> getAllQuestions(
+            Topic topic, Difficulty difficulty, String status, String companyTag) {
+
+        Specification<Question> spec = Specification
+                .where(QuestionSpecification.hasTopic(topic))
+                .and(QuestionSpecification.hasDifficulty(difficulty))
+                .and(QuestionSpecification.hasStatus(status))
+                .and(QuestionSpecification.hasCompanyTag(companyTag));
+
+        return questionRepository.findAll(spec)
+                .stream()
+                .map(this::mapToResponseDTO)
+                .collect(Collectors.toList());
     }
 
     @Override

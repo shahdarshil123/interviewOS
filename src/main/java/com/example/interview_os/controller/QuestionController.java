@@ -3,6 +3,8 @@ package com.example.interview_os.controller;
 import com.example.interview_os.dto.QuestionRequestDTO;
 import com.example.interview_os.dto.QuestionResponseDTO;
 import com.example.interview_os.entity.Question;
+import com.example.interview_os.enums.Difficulty;
+import com.example.interview_os.enums.Topic;
 import com.example.interview_os.service.QuestionService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -32,8 +34,17 @@ public class QuestionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestionResponseDTO>> getAllQuestion() {
-        return ResponseEntity.ok(questionService.getAllQuestions());
+    public ResponseEntity<List<QuestionResponseDTO>> getAllQuestion(
+            @RequestParam(required = false) String topic,
+            @RequestParam(required = false) String difficulty,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String companyTag
+    ) {
+        Topic topicEnum = topic != null ? Topic.valueOf(topic.toUpperCase()) : null;
+        Difficulty difficultyEnum = difficulty != null ?
+                Difficulty.valueOf(difficulty.toUpperCase()) : null;
+
+        return ResponseEntity.ok(questionService.getAllQuestions(topicEnum, difficultyEnum, status, companyTag));
     }
 
     @PutMapping("/{id}")
