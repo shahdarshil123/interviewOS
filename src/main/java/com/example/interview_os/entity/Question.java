@@ -5,6 +5,8 @@ import com.example.interview_os.enums.Topic;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "questions")
@@ -40,6 +42,15 @@ public class Question {
     protected void onCreate(){
         this.createdAt = LocalDateTime.now();
     }
+
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<QuestionAttempt> attempts = new ArrayList<>();
+
+    @Column(name = "last_attempted_at")
+    private LocalDateTime lastAttemptedAt;
+
+    @Column(name = "confidence_score")
+    private Integer confidenceScore = 0;
 
     public Long getId() {
         return id;
@@ -103,5 +114,29 @@ public class Question {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Integer getConfidenceScore() {
+        return confidenceScore;
+    }
+
+    public void setConfidenceScore(Integer confidenceScore) {
+        this.confidenceScore = confidenceScore;
+    }
+
+    public LocalDateTime getLastAttemptedAt() {
+        return lastAttemptedAt;
+    }
+
+    public void setLastAttemptedAt(LocalDateTime lastAttemptedAt) {
+        this.lastAttemptedAt = lastAttemptedAt;
+    }
+
+    public List<QuestionAttempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<QuestionAttempt> attempts) {
+        this.attempts = attempts;
     }
 }
