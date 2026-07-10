@@ -1,5 +1,6 @@
 package com.example.interview_os.controller;
 
+import com.example.interview_os.dto.analytics.TopicSummaryDTO;
 import com.example.interview_os.dto.analytics.WeakTopicDTO;
 import com.example.interview_os.service.AnalyticsService;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,11 @@ public class AnalyticsController {
     @GetMapping("/weak-topics")
     public ResponseEntity<List<WeakTopicDTO>> getWeakTopics(){
         return ResponseEntity.ok(analyticsService.getWeakTopics());
+    }
+
+    @GetMapping("/topic-summary")
+    public ResponseEntity<List<TopicSummaryDTO>> getTopicSummary() {
+        return ResponseEntity.ok(analyticsService.getTopicSummary());
     }
 }
 

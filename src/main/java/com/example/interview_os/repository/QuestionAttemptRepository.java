@@ -1,5 +1,6 @@
 package com.example.interview_os.repository;
 
+import com.example.interview_os.dto.analytics.TopicSummaryDTO;
 import com.example.interview_os.dto.analytics.WeakTopicDTO;
 import com.example.interview_os.entity.QuestionAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,17 @@ public interface QuestionAttemptRepository extends JpaRepository<QuestionAttempt
             "ORDER BY SUM(CASE WHEN qa.status = com.example.interview_os.enums.AttemptStatus.FAILED THEN 1L ELSE 0L END) DESC, " +
             "AVG(qa.confidenceScore) ASC")
     List<WeakTopicDTO> findWeakTopics();
+
+    @Query("SELECT new com.example.interview_os.dto.analytics.TopicSummaryDTO(" +
+            "q.topic, " +
+            "COUNT(qa.id), " +
+            "SUM(CASE WHEN qa.status = com.example.interview_os.enums.AttemptStatus.SOLVED THEN 1L ELSE 0L END), " +
+            "SUM(CASE WHEN qa.status = com.example.interview_os.enums.AttemptStatus.FAILED THEN 1L ELSE 0L END), " +
+            "SUM(CASE WHEN qa.status = com.example.interview_os.enums.AttemptStatus.PARTIAL THEN 1L ELSE 0L END), " +
+            "AVG(qa.confidenceScore)) " +
+            "FROM QuestionAttempt qa " +
+            "JOIN qa.question q " +
+            "GROUP BY q.topic " +
+            "ORDER BY q.topic ASC")
+    List<TopicSummaryDTO> findTopicSummary();
 }

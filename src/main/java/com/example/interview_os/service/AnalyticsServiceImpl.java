@@ -1,5 +1,6 @@
 package com.example.interview_os.service;
 
+import com.example.interview_os.dto.analytics.TopicSummaryDTO;
 import com.example.interview_os.dto.analytics.WeakTopicDTO;
 import com.example.interview_os.repository.QuestionAttemptRepository;
 import org.springframework.stereotype.Service;
@@ -18,4 +19,11 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     public List<WeakTopicDTO> getWeakTopics(){
         return attemptRepository.findWeakTopics();
     }
+
+    @Override
+    public List<TopicSummaryDTO> getTopicSummary() {
+        return attemptRepository.findTopicSummary();
+    }
+
+
 }
