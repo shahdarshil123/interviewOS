@@ -1,6 +1,7 @@
 package com.example.interview_os.dto;
 
 import com.example.interview_os.enums.Difficulty;
+import com.example.interview_os.enums.QuestionStatus;
 import com.example.interview_os.enums.Topic;
 
 import java.time.LocalDateTime;
@@ -13,8 +14,10 @@ public class QuestionResponseDTO {
     private Topic topic;
     private Difficulty difficulty;
     private String companyTag;
-    private String status;
+    private QuestionStatus status;
     private LocalDateTime createdAt;
+    private LocalDateTime lastAttemptedAt;
+    private Integer confidenceScore;
 
     public Long getId() {
         return id;
@@ -56,11 +59,11 @@ public class QuestionResponseDTO {
         this.topic = topic;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 
@@ -78,5 +81,21 @@ public class QuestionResponseDTO {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getConfidenceScore() {
+        return confidenceScore;
+    }
+
+    public void setConfidenceScore(Integer confidenceScore) {
+        this.confidenceScore = confidenceScore;
+    }
+
+    public LocalDateTime getLastAttemptedAt() {
+        return lastAttemptedAt;
+    }
+
+    public void setLastAttemptedAt(LocalDateTime lastAttemptedAt) {
+        this.lastAttemptedAt = lastAttemptedAt;
     }
 }

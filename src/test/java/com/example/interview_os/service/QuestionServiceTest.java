@@ -4,6 +4,7 @@ import com.example.interview_os.dto.QuestionRequestDTO;
 import com.example.interview_os.dto.QuestionResponseDTO;
 import com.example.interview_os.entity.Question;
 import com.example.interview_os.enums.Difficulty;
+import com.example.interview_os.enums.QuestionStatus;
 import com.example.interview_os.enums.Topic;
 import com.example.interview_os.exception.ResourceNotFoundException;
 import com.example.interview_os.mapper.QuestionMapper;
@@ -55,7 +56,7 @@ public class QuestionServiceTest {
         question.setTopic(Topic.ARRAYS);
         question.setDifficulty(Difficulty.EASY);
         question.setCompanyTag("Google");
-        question.setStatus("NOT_ATTEMPTED");
+        question.setStatus(QuestionStatus.NOT_ATTEMPTED);
 
         requestDTO = new QuestionRequestDTO();
         requestDTO.setTitle("Two Sum");
@@ -71,7 +72,7 @@ public class QuestionServiceTest {
         responseDTO.setTopic(Topic.ARRAYS);
         responseDTO.setDifficulty(Difficulty.EASY);
         responseDTO.setCompanyTag("Google");
-        responseDTO.setStatus("NOT_ATTEMPTED");
+        responseDTO.setStatus(QuestionStatus.NOT_ATTEMPTED);
         responseDTO.setCreatedAt(LocalDateTime.now());
     }
 

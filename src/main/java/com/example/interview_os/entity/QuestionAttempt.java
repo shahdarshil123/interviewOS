@@ -1,5 +1,7 @@
 package com.example.interview_os.entity;
 
+import com.example.interview_os.enums.AttemptStatus;
+import com.example.interview_os.service.AttemptService;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -15,8 +17,9 @@ public class QuestionAttempt {
     @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private AttemptStatus status;
 
     @Column(name = "time_taken")
     private Integer timeTaken;
@@ -59,11 +62,11 @@ public class QuestionAttempt {
         this.question = question;
     }
 
-    public String getStatus() {
+    public AttemptStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AttemptStatus status) {
         this.status = status;
     }
 

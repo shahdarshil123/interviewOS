@@ -1,6 +1,7 @@
 package com.example.interview_os.entity;
 
 import com.example.interview_os.enums.Difficulty;
+import com.example.interview_os.enums.QuestionStatus;
 import com.example.interview_os.enums.Topic;
 import jakarta.persistence.*;
 
@@ -32,8 +33,9 @@ public class Question {
     @Column(name="company_tag")
     private String companyTag;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status = "NOT_ATTEMPTED";
+    private QuestionStatus status = QuestionStatus.NOT_ATTEMPTED;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -108,11 +110,11 @@ public class Question {
         this.createdAt = createdAt;
     }
 
-    public String getStatus() {
+    public QuestionStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(QuestionStatus status) {
         this.status = status;
     }
 
@@ -138,5 +140,25 @@ public class Question {
 
     public void setAttempts(List<QuestionAttempt> attempts) {
         this.attempts = attempts;
+    }
+
+    public void updateFromAttempt(QuestionAttempt attempt) {
+        this.lastAttemptedAt = LocalDateTime.now();
+        this.confidenceScore = attempt.getConfidenceScore();
+
+        switch (attempt.getStatus()) {
+            case SOLVED -> this.status = QuestionStatus.SOLVED;
+            case PARTIAL -> {
+                if (this.status != QuestionStatus.SOLVED) {
+                    this.status = QuestionStatus.PARTIAL;
+                }
+            }
+            case FAILED -> {
+                if (this.status != QuestionStatus.SOLVED
+                        && this.status != QuestionStatus.PARTIAL) {
+                    this.status = QuestionStatus.FAILED;
+                }
+            }
+        }
     }
 }

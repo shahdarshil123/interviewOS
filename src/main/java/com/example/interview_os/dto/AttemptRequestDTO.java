@@ -1,17 +1,18 @@
 package com.example.interview_os.dto;
 
+import com.example.interview_os.enums.AttemptStatus;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public class AttemptRequestDTO {
-    @NotBlank(message="Status is required")
-    private String status;
+    @NotNull(message="Status is required")
+    private AttemptStatus status;
 
     private Integer timeTaken;
 
-    private String approch;
+    private String approach;
 
     private String mistakes;
 
@@ -22,19 +23,19 @@ public class AttemptRequestDTO {
     @Max(value=10, message="Confidence score must be at most 10")
     private Integer confidenceScore;
 
-    public String getApproch() {
-        return approch;
+    public String getApproach() {
+        return approach;
     }
 
-    public void setApproch(String approch) {
-        this.approch = approch;
+    public void setApproach(String approach) {
+        this.approach = approach;
     }
 
-    public String getStatus() {
+    public AttemptStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AttemptStatus status) {
         this.status = status;
     }
 

@@ -1,11 +1,13 @@
 package com.example.interview_os.dto;
 
+import com.example.interview_os.enums.AttemptStatus;
+
 import java.time.LocalDateTime;
 
 public class AttemptResponseDTO {
     private Long id;
     private Long questionId;
-    private String status;
+    private AttemptStatus status;
     private Integer timeTaken;
     private String approach;
     private String mistakes;
@@ -37,11 +39,11 @@ public class AttemptResponseDTO {
         this.timeTaken = timeTaken;
     }
 
-    public String getStatus() {
+    public AttemptStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(AttemptStatus status) {
         this.status = status;
     }
 

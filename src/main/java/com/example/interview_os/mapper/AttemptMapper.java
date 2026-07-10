@@ -12,7 +12,7 @@ public class AttemptMapper {
         QuestionAttempt attempt = new QuestionAttempt();
         attempt.setStatus(requestDTO.getStatus());
         attempt.setTimeTaken(requestDTO.getTimeTaken());
-        attempt.setApproach(requestDTO.getApproch());
+        attempt.setApproach(requestDTO.getApproach());
         attempt.setMistakes(requestDTO.getMistakes());
         attempt.setNotes(requestDTO.getNotes());
         attempt.setConfidenceScore(requestDTO.getConfidenceScore());

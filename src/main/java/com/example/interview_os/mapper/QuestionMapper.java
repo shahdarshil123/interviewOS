@@ -11,6 +11,8 @@ public class QuestionMapper {
         Question question = new Question();
         question.setTitle(requestDTO.getTitle());
         question.setDescription(requestDTO.getDescription());
+        question.setTopic(requestDTO.getTopic());
+        question.setDifficulty(requestDTO.getDifficulty());
         question.setCompanyTag(requestDTO.getCompanyTag());
         return question;
     }
@@ -25,6 +27,8 @@ public class QuestionMapper {
         dto.setCompanyTag(question.getCompanyTag());
         dto.setStatus(question.getStatus());
         dto.setCreatedAt(question.getCreatedAt());
+        dto.setConfidenceScore(question.getConfidenceScore());
+        dto.setLastAttemptedAt(question.getLastAttemptedAt());
         return dto;
     }
 }
