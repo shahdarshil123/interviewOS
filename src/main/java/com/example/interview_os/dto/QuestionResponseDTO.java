@@ -18,6 +18,8 @@ public class QuestionResponseDTO {
     private LocalDateTime createdAt;
     private LocalDateTime lastAttemptedAt;
     private Integer confidenceScore;
+    private Long userId;
+
 
     public Long getId() {
         return id;
@@ -97,5 +99,13 @@ public class QuestionResponseDTO {
 
     public void setLastAttemptedAt(LocalDateTime lastAttemptedAt) {
         this.lastAttemptedAt = lastAttemptedAt;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

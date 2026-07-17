@@ -29,6 +29,7 @@ public class QuestionMapper {
         dto.setCreatedAt(question.getCreatedAt());
         dto.setConfidenceScore(question.getConfidenceScore());
         dto.setLastAttemptedAt(question.getLastAttemptedAt());
+        dto.setUserId(question.getUser().getId());
         return dto;
     }
 }

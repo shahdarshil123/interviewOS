@@ -35,5 +35,13 @@ public class QuestionSpecification {
         };
     }
 
+    public static Specification<Question> hasUser(Long userId) {
+        return (root, query, criteriaBuilder) -> {
+            if (userId == null) return criteriaBuilder.conjunction();
+            return criteriaBuilder.equal(
+                    root.get("user").get("id"), userId);
+        };
+    }
+
 }
 
