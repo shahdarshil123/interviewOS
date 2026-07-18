@@ -1,5 +1,7 @@
 package com.example.interview_os.controller;
 
+import com.example.interview_os.dto.FeedbackRequestDTO;
+import com.example.interview_os.dto.FeedbackResponseDTO;
 import com.example.interview_os.dto.MockInterviewRequestDTO;
 import com.example.interview_os.dto.MockInterviewResponseDTO;
 import com.example.interview_os.enums.InterviewStatus;
@@ -33,4 +35,14 @@ public class MockInterviewController {
         return ResponseEntity.ok(
                 interviewService.getAllInterviews(status));
     }
+
+    @PostMapping("/{id}/feedback")
+    public ResponseEntity<FeedbackResponseDTO> addFeedback(
+            @PathVariable Long id,
+            @Valid @RequestBody FeedbackRequestDTO requestDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(interviewService.addFeedback(id, requestDTO));
+    }
+
+
 }
