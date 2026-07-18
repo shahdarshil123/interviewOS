@@ -1,5 +1,7 @@
 package com.example.interview_os.service;
 
+import com.example.interview_os.dto.FeedbackRequestDTO;
+import com.example.interview_os.dto.FeedbackResponseDTO;
 import com.example.interview_os.dto.MockInterviewRequestDTO;
 import com.example.interview_os.dto.MockInterviewResponseDTO;
 import com.example.interview_os.enums.InterviewStatus;
@@ -10,4 +12,6 @@ public interface MockInterviewService {
             MockInterviewRequestDTO requestDTO);
     List<MockInterviewResponseDTO> getAllInterviews(
             InterviewStatus status);
+    FeedbackResponseDTO addFeedback(Long interviewId,
+                                    FeedbackRequestDTO requestDTO);
 }
