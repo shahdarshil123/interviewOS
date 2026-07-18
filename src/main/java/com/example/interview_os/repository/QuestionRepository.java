@@ -30,5 +30,17 @@ public interface QuestionRepository extends JpaRepository<Question, Long>,
     List<Question> findOverdueQuestions(
             @Param("userId") Long userId,
             @Param("cutoffDate") LocalDateTime cutoffDate);
+
+    Long countByUserId(Long userId);
+
+    Long countByUserIdAndStatus(Long userId, QuestionStatus status);
+
+    @Query("SELECT q.topic, COUNT(q.id), " +
+            "SUM(CASE WHEN q.status = com.example.interview_os.enums.QuestionStatus.SOLVED THEN 1L ELSE 0L END), " +
+            "SUM(CASE WHEN q.status != com.example.interview_os.enums.QuestionStatus.NOT_ATTEMPTED THEN 1L ELSE 0L END), " +
+            "AVG(q.confidenceScore) " +
+            "FROM Question q WHERE q.user.id = :userId " +
+            "GROUP BY q.topic ORDER BY q.topic ASC")
+    List<Object[]> findTopicBreakdownByUserId(@Param("userId") Long userId);
 }
 

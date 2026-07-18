@@ -5,6 +5,7 @@ import com.example.interview_os.dto.analytics.WeakTopicDTO;
 import com.example.interview_os.entity.QuestionAttempt;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -35,4 +36,10 @@ public interface QuestionAttemptRepository extends JpaRepository<QuestionAttempt
             "GROUP BY q.topic " +
             "ORDER BY q.topic ASC")
     List<TopicSummaryDTO> findTopicSummary();
+
+    Long countByQuestionUserId(Long userId);
+
+    @Query("SELECT AVG(qa.confidenceScore) FROM QuestionAttempt qa " +
+            "WHERE qa.question.user.id = :userId")
+    Double findAverageConfidenceByUserId(@Param("userId") Long userId);
 }
